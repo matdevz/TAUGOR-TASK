@@ -2,22 +2,23 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import GlobalStyles from './styles/GlobalStyles';
 
-import { Register } from './pages/Register';
-import { Login } from './pages/Login';
 import { AuthProvider } from './context/AuthContext';
-
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
+import { Dashboard } from './pages/Dashboard';
+import { NewTask } from './pages/NewTask';
+import { EditTask } from './pages/EditTask';
 export default function App() {
 	return (
 		<>
 			<AuthProvider>
 				<Routes>
-					<Route
-						exact
-						path='*'
-						element={<Navigate replace to='/login' />}
-					/>
+					<Route exact path='/' element={<Navigate to='/login' />} />
 					<Route exact path='/login' element={<Login />} />
 					<Route exact path='/register' element={<Register />} />
+					<Route exact path='/dashboard' element={<Dashboard />} />
+					<Route exact path='/newtask' element={<NewTask />} />
+					<Route exact path='/editask' element={<EditTask />} />
 				</Routes>
 			</AuthProvider>
 

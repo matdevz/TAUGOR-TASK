@@ -22,16 +22,15 @@ export const Login = () => {
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
-		const { user, error } = await authLoginUser(email, password);
+		const { user } = await authLoginUser(email, password);
 
 		if (user) {
-			navigate('/register', { replace: true });
-		} else {
-			alert(error.message);
-		}
+			localStorage.setItem('token', user.accessToken);
 
-		console.table(email, password);
-		console.log(user);
+			navigate('/dashboard', { replace: true });
+		} else {
+			alert('Não foi possível fazer login');
+		}
 
 		setStates();
 	};
@@ -42,11 +41,9 @@ export const Login = () => {
 
 	const handleEmail = (event) => {
 		setEmail(event.target.value);
-		console.log(email);
 	};
 	const handlePassword = (event) => {
 		setPassword(event.target.value);
-		console.log(password);
 	};
 
 	return (
