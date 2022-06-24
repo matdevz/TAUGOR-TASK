@@ -79,7 +79,7 @@ export const AppMain = () => {
 					titleTask='Concluir o teste'
 					AuthorName='Mateus Henrique'
 				/>
-				<AppButton />
+				<AppButton pathName='/newtask' />
 			</Container>
 		</>
 	);

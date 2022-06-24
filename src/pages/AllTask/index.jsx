@@ -8,7 +8,7 @@ export const AllTask = () => {
 	return (
 		<>
 			<Container>
-				<AppHeader />
+				<AppHeader search={true} hideLogo={true} />
 				<AppMain />
 			</Container>
 		</>

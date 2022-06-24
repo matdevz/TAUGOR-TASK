@@ -55,7 +55,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	},
 }));
 
-export const AppHeader = () => {
+export const AppHeader = (props) => {
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 	const navigate = useNavigate('');
@@ -118,23 +118,37 @@ export const AppHeader = () => {
 			<Box sx={{ flexGrow: 1 }}>
 				<AppBar>
 					<Toolbar>
-						<Typography
-							variant='h6'
-							noWrap
-							component='div'
-							sx={{ display: { xs: 'none', sm: 'block' } }}
-						>
-							TAUGOR
-						</Typography>
-						<Search>
-							<SearchIconWrapper>
-								<SearchIcon />
-							</SearchIconWrapper>
-							<StyledInputBase
-								placeholder='Search…'
-								inputProps={{ 'aria-label': 'search' }}
-							/>
-						</Search>
+						{props.hideLogo ? (
+							<Typography
+								variant='h6'
+								noWrap
+								component='div'
+								sx={{ display: { xs: 'none', sm: 'block' } }}
+							>
+								TAUGOR
+							</Typography>
+						) : (
+							<Typography
+								variant='h6'
+								noWrap
+								component='div'
+								sx={{ display: { xs: 'block', sm: 'block' } }}
+							>
+								TAUGOR
+							</Typography>
+						)}
+
+						{props.search && (
+							<Search>
+								<SearchIconWrapper>
+									<SearchIcon />
+								</SearchIconWrapper>
+								<StyledInputBase
+									placeholder='Search…'
+									inputProps={{ 'aria-label': 'search' }}
+								/>
+							</Search>
+						)}
 						<Box sx={{ flexGrow: 1 }} />
 						<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 							<IconButton

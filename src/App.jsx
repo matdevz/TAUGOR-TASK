@@ -6,6 +6,7 @@ import { AuthProvider } from './context/AuthContext';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { AllTask } from './pages/AllTask/index';
+import { NewTask } from './pages/NewTask/index';
 export default function App() {
 	return (
 		<>
@@ -15,6 +16,7 @@ export default function App() {
 					<Route exact path='/login' element={<Login />} />
 					<Route exact path='/register' element={<Register />} />
 					<Route exact path='/alltask' element={<AllTask />} />
+					<Route exact path='/newtask' element={<NewTask />} />
 				</Routes>
 			</AuthProvider>
 
