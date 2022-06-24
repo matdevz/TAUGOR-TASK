@@ -5,9 +5,7 @@ import GlobalStyles from './styles/GlobalStyles';
 import { AuthProvider } from './context/AuthContext';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
-import { Dashboard } from './pages/Dashboard';
-import { NewTask } from './pages/NewTask';
-import { EditTask } from './pages/EditTask';
+import { AllTask } from './pages/AllTask/index';
 export default function App() {
 	return (
 		<>
@@ -16,9 +14,7 @@ export default function App() {
 					<Route exact path='/' element={<Navigate to='/login' />} />
 					<Route exact path='/login' element={<Login />} />
 					<Route exact path='/register' element={<Register />} />
-					<Route exact path='/dashboard' element={<Dashboard />} />
-					<Route exact path='/newtask' element={<NewTask />} />
-					<Route exact path='/editask' element={<EditTask />} />
+					<Route exact path='/alltask' element={<AllTask />} />
 				</Routes>
 			</AuthProvider>
 

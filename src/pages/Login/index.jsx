@@ -25,11 +25,7 @@ export const Login = () => {
 		const { user } = await authLoginUser(email, password);
 
 		if (user) {
-			localStorage.setItem('token', user.accessToken);
-
-			navigate('/dashboard', { replace: true });
-		} else {
-			alert('Não foi possível fazer login');
+			navigate('/alltask');
 		}
 
 		setStates();

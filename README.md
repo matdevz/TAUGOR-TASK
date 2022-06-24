@@ -11,11 +11,11 @@
 ## Objectives
 
 -   Usuário pode:
-    -   [] Criar uma conta
-    -   [] Efetuar um login
+    -   [x] Criar uma conta
+    -   [x] Efetuar um login
     -   [] Criar e editar tickets:
         -   Título
-        -   Decsrição
+        -   Descrição
         -   Produto
         -   Categoria
         -   Prioridade (Alta, Médio, Baixa)

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authCreateUser } from '../../firebase/FirebaseAuth';
-import { insertDataUser } from '../../firebase/FirebaseStore';
+// import { insertDataUser } from '../../firebase/FirebaseStore';
 
 import {
 	Container,
@@ -24,20 +24,11 @@ export const Register = () => {
 
 	const handleRegister = async (event) => {
 		event.preventDefault();
-		const { user, error } = await authCreateUser(email, password);
+		const { user } = await authCreateUser(email, password);
 
 		if (user) {
-			await insertDataUser(user.uid, {
-				name: name,
-				email: email,
-			});
-
-			localStorage.setItem('token', user.accessToken);
-			navigate('/dashboard', { replace: true });
-		} else {
-			alert(error.message);
+			navigate('/alltask');
 		}
-
 		setStates();
 	};
 
