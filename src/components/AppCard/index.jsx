@@ -7,18 +7,46 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { deleteDocumentTask } from '../../firebase/FirebaseStore';
+import { useNavigate } from 'react-router-dom';
 
 export const AppCard = (props) => {
+	const navigate = useNavigate('');
+	const handleDelete = () => {
+		let confirmDelete = window.confirm('Deseja apagar está tarefa?');
+
+		if (confirmDelete) {
+			deleteDocumentTask(props.id);
+		}
+	};
+	const handleEdit = () => {
+		navigate(`/edittask/${props.id}`);
+	};
+
 	return (
 		<>
-			<Card sx={{ minWidth: 275 }} style={{ marginTop: '20px' }}>
+			<Card
+				sx={{ minWidth: 275 }}
+				style={{ marginTop: '20px' }}
+				id={props.id}
+			>
 				<CardContent>
 					<Typography
 						sx={{ fontSize: 14 }}
-						color={props.status}
+						color={() => {
+							if (props.status === 'pending') {
+								return 'warning.dark';
+							}
+							if (props.status === 'progress') {
+								return 'info.dark';
+							}
+							if (props.status === 'finished') {
+								return 'success.dark';
+							}
+						}}
 						gutterBottom
 					>
-						{props.statusName}
+						{props.statusName.toUpperCase()}
 					</Typography>
 					<Typography variant='h5' component='div'>
 						{props.titleTask}
@@ -32,11 +60,11 @@ export const AppCard = (props) => {
 					</Typography>
 				</CardContent>
 				<CardActions>
-					<Button size='small'>
+					<Button size='small' onClick={handleEdit}>
 						<EditIcon />
 						Editar
 					</Button>
-					<Button size='small'>
+					<Button size='small' onClick={handleDelete}>
 						<DeleteIcon />
 						APAGAR
 					</Button>

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authCreateUser } from '../../firebase/FirebaseAuth';
-// import { insertDataUser } from '../../firebase/FirebaseStore';
+import { salveDatasUsers } from '../../firebase/FirebaseStore';
 
 import {
 	Container,
@@ -17,17 +17,30 @@ import {
 } from './styles';
 
 export const Register = () => {
+	const [loading, setLoanding] = useState(false);
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const navigate = useNavigate('');
 
+	useEffect(() => {
+		if (!loading && localStorage.getItem('token') !== null) {
+			navigate('/alltask');
+		}
+	});
+
 	const handleRegister = async (event) => {
 		event.preventDefault();
+		setLoanding(true);
 		const { user } = await authCreateUser(email, password);
 
 		if (user) {
+			console.log(user);
+			salveDatasUsers(user.uid, { name: name, email: email });
+			localStorage.setItem('token', user.accessToken);
+			localStorage.setItem('userUid', user.uid);
 			navigate('/alltask');
+			setLoanding(false);
 		}
 		setStates();
 	};
@@ -74,6 +87,7 @@ export const Register = () => {
 						<Input
 							type='password'
 							placeholder='Senha'
+							minLength='6'
 							required
 							onChange={handlePassword}
 							value={password}

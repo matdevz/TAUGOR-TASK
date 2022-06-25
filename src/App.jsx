@@ -7,6 +7,8 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { AllTask } from './pages/AllTask/index';
 import { NewTask } from './pages/NewTask/index';
+import { PrivateRouter } from './Private/PrivateRouter';
+import { EditTask } from './pages/EditTask/index';
 export default function App() {
 	return (
 		<>
@@ -15,8 +17,33 @@ export default function App() {
 					<Route exact path='/' element={<Navigate to='/login' />} />
 					<Route exact path='/login' element={<Login />} />
 					<Route exact path='/register' element={<Register />} />
-					<Route exact path='/alltask' element={<AllTask />} />
-					<Route exact path='/newtask' element={<NewTask />} />
+					<Route
+						exact
+						path='/alltask'
+						element={
+							<PrivateRouter redirectTo='/login'>
+								<AllTask />
+							</PrivateRouter>
+						}
+					/>
+					<Route
+						exact
+						path='/newtask'
+						element={
+							<PrivateRouter redirectTo='/login'>
+								<NewTask />
+							</PrivateRouter>
+						}
+					/>
+					<Route
+						exact
+						path='/edittask/:id'
+						element={
+							<PrivateRouter redirectTo='/login'>
+								<EditTask />
+							</PrivateRouter>
+						}
+					/>
 				</Routes>
 			</AuthProvider>
 
