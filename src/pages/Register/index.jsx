@@ -32,10 +32,11 @@ export const Register = () => {
 	const handleRegister = async (event) => {
 		event.preventDefault();
 		setLoanding(true);
-		const { user } = await authCreateUser(email, password);
-
+		const { user, error } = await authCreateUser(email, password);
+		if (error) {
+			alert('Este usuário já existe! Tente efetuar o login.');
+		}
 		if (user) {
-			console.log(user);
 			salveDatasUsers(user.uid, { name: name, email: email });
 			localStorage.setItem('token', user.accessToken);
 			localStorage.setItem('userUid', user.uid);

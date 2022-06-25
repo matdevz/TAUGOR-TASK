@@ -30,13 +30,16 @@ export const Login = () => {
 	const handleLogin = async (event) => {
 		event.preventDefault();
 		setLoanding(true);
-		const { user } = await authLoginUser(email, password);
+		const { user, error } = await authLoginUser(email, password);
 
 		if (user) {
 			localStorage.setItem('token', user.accessToken);
 			localStorage.setItem('userUid', user.uid);
 			navigate('/alltask');
 			setLoanding(false);
+		}
+		if (error) {
+			alert('Email ou a senha está incorreta!');
 		}
 		setStates();
 	};
