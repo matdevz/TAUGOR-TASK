@@ -13,18 +13,14 @@
 -   Usuário pode:
     -   [x] Criar uma conta
     -   [x] Efetuar um login
-    -   [] Criar e editar tickets:
+    -   [x] Criar e editar tickets:
         -   Título
         -   Descrição
-        -   Produto
-        -   Categoria
-        -   Prioridade (Alta, Médio, Baixa)
         -   Estados (Em andamento, concluida, cancelada)
-        -   Anexo
+        -   Autor
 -   Aplicação deve:
-    -   [] Filtrar por: Título, Statu, Autor
-    -   Exigir obrigatoriedade de anexo (.pdf/.txt)
-    -   [] Poder visualizar o documento
-    -   [] Ser responsiva
+    -   [ ] Filtrar por: Título, Statu, Autor
+    -   [x] Poder visualizar o documento
+    -   [x] Ser responsiva
 
 ## Projeto em desenvolvimento.
