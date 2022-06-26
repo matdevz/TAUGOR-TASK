@@ -3,13 +3,11 @@ import {
 	getFirestore,
 	collection,
 	addDoc,
-	// query,
 	getDocs,
 	getDoc,
 	deleteDoc,
 	setDoc,
 	doc,
-	// updateDoc,
 } from 'firebase/firestore';
 
 export const db = getFirestore(config);
@@ -44,9 +42,11 @@ export const getDataUsers = async () => {
 };
 
 export const salveDocumentTask = async (data) => {
-	const docRef = await addDoc(taskCollectionRef, data);
-
-	console.log(docRef);
+	try {
+		await addDoc(taskCollectionRef, data);
+	} catch (erro) {
+		console.log(erro);
+	}
 };
 
 export const readDocumentsTasks = async () => {
@@ -85,11 +85,7 @@ export const getAllDataOneDoc = async (docId) => {
 		const docRef = doc(taskCollectionRef, docId);
 		const docSnap = await getDoc(docRef);
 
-		if (docSnap.exists()) {
-			return docSnap.data();
-		} else {
-			console.log('No such document!');
-		}
+		if (docSnap.exists()) return docSnap.data();
 	} catch (erro) {
 		console.log(erro);
 	}

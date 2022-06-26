@@ -30,7 +30,7 @@ export const Login = () => {
 	const handleLogin = async (event) => {
 		event.preventDefault();
 		setLoanding(true);
-		const { user, error } = await authLoginUser(email, password);
+		const user = await authLoginUser(email, password);
 
 		if (user) {
 			localStorage.setItem('token', user.accessToken);
@@ -38,22 +38,12 @@ export const Login = () => {
 			navigate('/alltask');
 			setLoanding(false);
 		}
-		if (error) {
-			alert('Email ou a senha está incorreta!');
-		}
 		setStates();
 	};
 
 	const setStates = () => {
 		setEmail('');
 		setPassword('');
-	};
-
-	const handleEmail = (event) => {
-		setEmail(event.target.value);
-	};
-	const handlePassword = (event) => {
-		setPassword(event.target.value);
 	};
 
 	return (
@@ -70,11 +60,15 @@ export const Login = () => {
 							type='email'
 							name='email'
 							placeholder='Email'
-							onChange={handleEmail}
+							onChange={(event) => {
+								setEmail(event.target.value);
+							}}
 							required
 						/>
 						<Input
-							onChange={handlePassword}
+							onChange={(event) => {
+								setPassword(event.target.value);
+							}}
 							type='password'
 							name='password'
 							placeholder='Password'

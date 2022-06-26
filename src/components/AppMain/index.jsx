@@ -15,27 +15,7 @@ export const AppMain = () => {
 		getDatasTasks();
 	}, [dataTasks]);
 
-	if (dataTasks.length === 0) {
-		return (
-			<>
-				<Container
-					maxWidth='lg'
-					style={{ paddingTop: '80px', textAlign: 'center' }}
-				>
-					<img
-						src='./assets/no-task.jpg'
-						alt=''
-						style={{ width: 'min(600px, 100%)' }}
-					/>
-					<h1 style={{ textAlign: 'center' }}>
-						Nenhuma tareafa adicionada
-					</h1>
-
-					<AppButton pathName='/newtask' />
-				</Container>
-			</>
-		);
-	} else {
+	if (dataTasks.length !== 0) {
 		return (
 			<>
 				<Container maxWidth='lg' style={{ paddingTop: '80px' }}>
@@ -51,6 +31,26 @@ export const AppMain = () => {
 							/>
 						);
 					})}
+
+					<AppButton pathName='/newtask' />
+				</Container>
+			</>
+		);
+	} else {
+		return (
+			<>
+				<Container
+					maxWidth='lg'
+					style={{ paddingTop: '80px', textAlign: 'center' }}
+				>
+					<img
+						src='./assets/no-task.jpg'
+						alt=''
+						style={{ width: 'min(600px, 100%)' }}
+					/>
+					<h1 style={{ textAlign: 'center' }}>
+						Nenhuma tareafa adicionada
+					</h1>
 
 					<AppButton pathName='/newtask' />
 				</Container>

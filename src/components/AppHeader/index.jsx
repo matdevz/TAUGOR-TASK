@@ -1,86 +1,45 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { authLogoutUser } from '../../firebase/FirebaseAuth';
 
-import { styled, alpha } from '@mui/material/styles';
+import { Search, SearchIconWrapper, StyledInputBase } from './styles';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { AuthContext } from '../../context/AuthContext';
-import { authLogoutUser } from '../../firebase/FirebaseAuth';
-
-const Search = styled('div')(({ theme }) => ({
-	position: 'relative',
-	borderRadius: theme.shape.borderRadius,
-	backgroundColor: alpha(theme.palette.common.white, 0.15),
-	'&:hover': {
-		backgroundColor: alpha(theme.palette.common.white, 0.25),
-	},
-	marginRight: theme.spacing(2),
-	marginLeft: 0,
-	width: '100%',
-	[theme.breakpoints.up('sm')]: {
-		marginLeft: theme.spacing(3),
-		width: 'auto',
-	},
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-	padding: theme.spacing(0, 2),
-	height: '100%',
-	position: 'absolute',
-	pointerEvents: 'none',
-	display: 'flex',
-	alignItems: 'center',
-	justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-	color: 'inherit',
-	'& .MuiInputBase-input': {
-		padding: theme.spacing(1, 1, 1, 0),
-		paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-		transition: theme.transitions.create('width'),
-		width: '100%',
-		[theme.breakpoints.up('md')]: {
-			width: '20ch',
-		},
-	},
-}));
 
 export const AppHeader = (props) => {
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
 	const navigate = useNavigate('');
-
-	const currentUser = useContext(AuthContext);
-	useEffect(() => {
-		if (!currentUser || currentUser === null) {
-			navigate('/login');
-		}
-	});
-
 	const handleLogout = () => {
 		localStorage.removeItem('userUid');
 		localStorage.removeItem('token');
-
 		authLogoutUser();
+		navigate('/login');
 	};
 
-	const handleMobileMenuClose = () => {
-		setMobileMoreAnchorEl(null);
-	};
-
-	const handleMobileMenuOpen = (event) => {
-		setMobileMoreAnchorEl(event.currentTarget);
-	};
+	const defineVisibilityLogo = props.hideLogo
+		? {
+				display: {
+					xs: 'none',
+					sm: 'block',
+				},
+		  }
+		: {
+				display: {
+					xs: 'block',
+					sm: 'block',
+				},
+		  };
 
 	const menuId = 'primary-search-account-menu';
 
@@ -99,7 +58,9 @@ export const AppHeader = (props) => {
 				horizontal: 'right',
 			}}
 			open={isMobileMenuOpen}
-			onClose={handleMobileMenuClose}
+			onClose={() => {
+				setMobileMoreAnchorEl(null);
+			}}
 		>
 			<MenuItem onClick={handleLogout}>
 				<IconButton
@@ -121,25 +82,14 @@ export const AppHeader = (props) => {
 			<Box sx={{ flexGrow: 1 }}>
 				<AppBar>
 					<Toolbar>
-						{props.hideLogo ? (
-							<Typography
-								variant='h6'
-								noWrap
-								component='div'
-								sx={{ display: { xs: 'none', sm: 'block' } }}
-							>
-								TAUGOR
-							</Typography>
-						) : (
-							<Typography
-								variant='h6'
-								noWrap
-								component='div'
-								sx={{ display: { xs: 'block', sm: 'block' } }}
-							>
-								TAUGOR
-							</Typography>
-						)}
+						<Typography
+							variant='h6'
+							noWrap
+							component='div'
+							sx={defineVisibilityLogo}
+						>
+							TAUGOR
+						</Typography>
 
 						{props.search && (
 							<Search>
@@ -172,7 +122,9 @@ export const AppHeader = (props) => {
 								aria-label='show more'
 								aria-controls={mobileMenuId}
 								aria-haspopup='true'
-								onClick={handleMobileMenuOpen}
+								onClick={(event) => {
+									setMobileMoreAnchorEl(event.currentTarget);
+								}}
 								color='inherit'
 							>
 								<MoreIcon />

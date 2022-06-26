@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import Button from '@mui/material/Button';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
 	getDataUsers,
 	salveDocumentTask,
 	updateDocumentTask,
 	getAllDataOneDoc,
 } from '../../firebase/FirebaseStore';
-import { useParams } from 'react-router-dom';
+
+import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import FormControl from '@mui/material/FormControl';
+import Button from '@mui/material/Button';
 
 export const AppForm = (props) => {
 	const [names, setNames] = useState([]);
-	const { id } = useParams();
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [author, setAuthor] = useState('');
 	const [status, setStatus] = useState('');
 
+	const { id } = useParams();
+	const navigate = useNavigate('');
+
 	useEffect(() => {
 		const getNamesUsers = async () => {
 			const dataUsers = await getDataUsers();
-
 			setNames(dataUsers);
 		};
 
@@ -63,13 +65,17 @@ export const AppForm = (props) => {
 					author: author,
 					status: status,
 				});
+
+				setTimeout(() => {
+					navigate('/alltask');
+				}, 2000);
 			}
 			resetStates();
 			setTimeout(() => {
 				props.salve
 					? alert('Tarefa criada com sucesso')
 					: alert('Tarefa alterada com sucesso');
-			}, 1000);
+			}, 300);
 		} else {
 			alert('Preencha todos os dados');
 		}

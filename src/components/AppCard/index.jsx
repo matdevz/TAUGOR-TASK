@@ -12,12 +12,10 @@ import { useNavigate } from 'react-router-dom';
 
 export const AppCard = (props) => {
 	const navigate = useNavigate('');
-	const handleDelete = () => {
-		let confirmDelete = window.confirm('Deseja apagar está tarefa?');
 
-		if (confirmDelete) {
-			deleteDocumentTask(props.id);
-		}
+	const handleDelete = () => {
+		const confirmDelete = window.confirm('Deseja apagar está tarefa?');
+		if (confirmDelete) deleteDocumentTask(props.id);
 	};
 	const handleEdit = () => {
 		navigate(`/edittask/${props.id}`);

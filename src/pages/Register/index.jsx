@@ -24,19 +24,17 @@ export const Register = () => {
 	const navigate = useNavigate('');
 
 	useEffect(() => {
-		if (!loading && localStorage.getItem('token') !== null) {
+		if (!loading && localStorage.getItem('token') !== null)
 			navigate('/alltask');
-		}
 	});
 
 	const handleRegister = async (event) => {
 		event.preventDefault();
 		setLoanding(true);
-		const { user, error } = await authCreateUser(email, password);
-		if (error) {
-			alert('Este usuário já existe! Tente efetuar o login.');
-		}
+		const user = await authCreateUser(email, password);
+
 		if (user) {
+			console.log(user);
 			salveDatasUsers(user.uid, { name: name, email: email });
 			localStorage.setItem('token', user.accessToken);
 			localStorage.setItem('userUid', user.uid);
@@ -50,15 +48,6 @@ export const Register = () => {
 		setName('');
 		setEmail('');
 		setPassword('');
-	};
-	const handleName = (event) => {
-		setName(event.target.value);
-	};
-	const handleEmail = (event) => {
-		setEmail(event.target.value);
-	};
-	const handlePassword = (event) => {
-		setPassword(event.target.value);
 	};
 
 	return (
@@ -75,14 +64,18 @@ export const Register = () => {
 							type='text'
 							placeholder='Nome'
 							required
-							onChange={handleName}
+							onChange={(event) => {
+								setName(event.target.value);
+							}}
 							value={name}
 						/>
 						<Input
 							type='email'
 							placeholder='Email'
 							required
-							onChange={handleEmail}
+							onChange={(event) => {
+								setEmail(event.target.value);
+							}}
 							value={email}
 						/>
 						<Input
@@ -90,7 +83,9 @@ export const Register = () => {
 							placeholder='Senha'
 							minLength='6'
 							required
-							onChange={handlePassword}
+							onChange={(event) => {
+								setPassword(event.target.value);
+							}}
 							value={password}
 						/>
 

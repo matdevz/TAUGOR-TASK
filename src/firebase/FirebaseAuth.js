@@ -14,18 +14,18 @@ export const authCreateUser = async (email, password) => {
 			email,
 			password
 		);
-		return user;
+		return user.user;
 	} catch (error) {
-		return error;
+		alert('Este usuário já existe! Tente efetuar o login.');
 	}
 };
 
 export const authLoginUser = async (email, password) => {
 	try {
 		const user = await signInWithEmailAndPassword(auth, email, password);
-		return user;
+		return user.user;
 	} catch (error) {
-		return error;
+		alert('Email ou a senha está incorreta!');
 	}
 };
 
@@ -33,6 +33,6 @@ export const authLogoutUser = async () => {
 	try {
 		await auth.signOut();
 	} catch (error) {
-		return error;
+		alert('Ouve uma falha:( Tente novamente!');
 	}
 };
