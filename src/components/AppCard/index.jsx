@@ -17,7 +17,6 @@ export const AppCard = (props) => {
 		const confirmDelete = window.confirm('Deseja apagar está tarefa?');
 		if (confirmDelete) {
 			await deleteDocumentTask(props.id);
-			window.location.reload();
 		}
 	};
 	const handleEdit = () => {

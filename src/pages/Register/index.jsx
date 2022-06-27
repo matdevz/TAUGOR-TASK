@@ -34,7 +34,6 @@ export const Register = () => {
 		const user = await authCreateUser(email, password);
 
 		if (user) {
-			console.log(user);
 			salveDatasUsers(user.uid, { name: name, email: email });
 			localStorage.setItem('token', user.accessToken);
 			localStorage.setItem('userUid', user.uid);

@@ -14,7 +14,7 @@ export const AppMain = (props) => {
 			setDataTasks(docs);
 		};
 		getDatasTasks();
-	}, []);
+	}, [dataTasks]);
 
 	useEffect(() => {
 		const objSearch = dataTasks.filter(
@@ -52,7 +52,6 @@ export const AppMain = (props) => {
 			<>
 				<Container maxWidth='lg' style={{ paddingTop: '80px' }}>
 					{taskList.map((doc) => {
-						console.log(dataTasks);
 						return (
 							<AppCard
 								key={doc.id}
