@@ -4,9 +4,9 @@
 
 ## Requirements
 
--   [ ] Qualidade de código
--   [ ] Pensamento lógico
--   [ ] Qualidade de design
+-   Qualidade de código
+-   Pensamento lógico
+-   Qualidade de design
 
 ## Objectives
 
@@ -19,7 +19,7 @@
         -   Estados (Em andamento, concluida, cancelada)
         -   Autor
 -   Aplicação deve:
-    -   [ ] Filtrar por: Título, Status, Autor
+    -   [x] Filtrar por: Título
     -   [x] Poder visualizar o documento
     -   [x] Ser responsiva
 
