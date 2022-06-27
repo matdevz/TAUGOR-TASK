@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 
+// Tive uns problemas com firebase e não consigo deixar as propriedades no dotenv
 const firebaseConfig = {
 	apiKey: 'AIzaSyAKrZgQQCX8PyyVAxe1wXkFitcD2DKOH2E',
 	authDomain: 'taugor-manager.firebaseapp.com',
