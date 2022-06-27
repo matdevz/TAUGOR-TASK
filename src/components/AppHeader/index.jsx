@@ -17,6 +17,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 export const AppHeader = (props) => {
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
 	const navigate = useNavigate('');
@@ -97,6 +98,8 @@ export const AppHeader = (props) => {
 									<SearchIcon />
 								</SearchIconWrapper>
 								<StyledInputBase
+									value={props.searching}
+									onChange={props.handleChangeSearch}
 									placeholder='Search…'
 									inputProps={{ 'aria-label': 'search' }}
 								/>

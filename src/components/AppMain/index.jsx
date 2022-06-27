@@ -4,8 +4,9 @@ import { AppButton } from '../AppButton';
 import Container from '@mui/material/Container';
 import { readDocumentsTasks } from '../../firebase/FirebaseStore';
 
-export const AppMain = () => {
+export const AppMain = (props) => {
 	const [dataTasks, setDataTasks] = useState([]);
+	const [taskList, setTaskList] = useState([]);
 
 	useEffect(() => {
 		const getDatasTasks = async () => {
@@ -13,30 +14,20 @@ export const AppMain = () => {
 			setDataTasks(docs);
 		};
 		getDatasTasks();
-	}, [dataTasks]);
+	}, []);
 
-	if (dataTasks.length !== 0) {
-		return (
-			<>
-				<Container maxWidth='lg' style={{ paddingTop: '80px' }}>
-					{dataTasks.map((doc) => {
-						return (
-							<AppCard
-								key={doc.id}
-								id={doc.id}
-								status={doc.data.status}
-								statusName={doc.data.status}
-								titleTask={doc.data.title}
-								AuthorName={doc.data.author}
-							/>
-						);
-					})}
-
-					<AppButton pathName='/newtask' />
-				</Container>
-			</>
+	useEffect(() => {
+		const objSearch = dataTasks.filter(
+			(obj) =>
+				obj.data.title
+					.toLowerCase()
+					.indexOf(props.searching.toLowerCase()) > -1
 		);
-	} else {
+
+		setTaskList(objSearch);
+	}, [dataTasks, props.searching]);
+
+	if (dataTasks.length === 0) {
 		return (
 			<>
 				<Container
@@ -49,8 +40,30 @@ export const AppMain = () => {
 						style={{ width: 'min(600px, 100%)' }}
 					/>
 					<h1 style={{ textAlign: 'center' }}>
-						Nenhuma tareafa adicionada
+						Nenhuma tarefa adicionada!
 					</h1>
+
+					<AppButton pathName='/newtask' />
+				</Container>
+			</>
+		);
+	} else {
+		return (
+			<>
+				<Container maxWidth='lg' style={{ paddingTop: '80px' }}>
+					{taskList.map((doc) => {
+						console.log(dataTasks);
+						return (
+							<AppCard
+								key={doc.id}
+								id={doc.id}
+								status={doc.data.status}
+								statusName={doc.data.status}
+								titleTask={doc.data.title}
+								AuthorName={doc.data.author}
+							/>
+						);
+					})}
 
 					<AppButton pathName='/newtask' />
 				</Container>
