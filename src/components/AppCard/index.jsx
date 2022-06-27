@@ -54,10 +54,7 @@ export const AppCard = (props) => {
 					<Typography sx={{ mb: 1.5 }} color='text.secondary'>
 						{props.AuthorName}
 					</Typography>
-					<Typography variant='body2'>
-						Fazer um aplicativo completo usando React, Firebase e
-						Material UI
-					</Typography>
+					<Typography variant='body2'>{props.description}</Typography>
 				</CardContent>
 				<CardActions>
 					<Button size='small' onClick={handleEdit}>

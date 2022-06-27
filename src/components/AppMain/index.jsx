@@ -60,6 +60,7 @@ export const AppMain = (props) => {
 								statusName={doc.data.status}
 								titleTask={doc.data.title}
 								AuthorName={doc.data.author}
+								description={doc.data.description}
 							/>
 						);
 					})}
