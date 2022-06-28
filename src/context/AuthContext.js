@@ -1,8 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 
 import { auth } from '../firebase/FirebaseAuth';
+import { AppLoading } from '../components/AppLoading';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -17,20 +16,7 @@ export const AuthProvider = ({ children }) => {
 	}, []);
 
 	if (loading) {
-		return (
-			<Box
-				style={{
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					backgroundColor: 'white',
-					width: '100vw',
-					height: '100vh',
-				}}
-			>
-				<CircularProgress />
-			</Box>
-		);
+		return <AppLoading />;
 	}
 
 	return (

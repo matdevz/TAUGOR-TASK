@@ -36,6 +36,8 @@ export const AppMain = (props) => {
 							<AppCard
 								key={doc.id}
 								id={doc.id}
+								fileUrl={doc.data.fileUrl}
+								fileRef={doc.data.fileRef}
 								status={doc.data.status}
 								statusName={doc.data.status}
 								titleTask={doc.data.title}
@@ -62,7 +64,7 @@ export const AppMain = (props) => {
 						style={{ width: 'min(600px, 100%)' }}
 					/>
 					<h1 style={{ textAlign: 'center' }}>
-						Nenhuma tarefa adicionada!
+						Não há tarefas para você!
 					</h1>
 
 					<AppButton pathName='/newtask' />

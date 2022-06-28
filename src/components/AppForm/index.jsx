@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { salveFilesStorage } from '../../firebase/FirebaseStorage';
 import {
 	getDataUsers,
 	salveDocumentTask,
@@ -20,6 +21,7 @@ export const AppForm = (props) => {
 	const [description, setDescription] = useState('');
 	const [responsible, setResponsible] = useState('');
 	const [status, setStatus] = useState('');
+	const [file, setFile] = useState(null);
 
 	const { id } = useParams();
 	const navigate = useNavigate('');
@@ -48,22 +50,30 @@ export const AppForm = (props) => {
 		}
 	}, [id, props.edit]);
 
-	const handleSubmit = () => {
-		if (title && description && responsible && status) {
+	const handleSubmit = async () => {
+		if (title && description && responsible && status && file) {
 			if (props.salve) {
+				const fileData = await salveFilesStorage(file);
+
 				salveDocumentTask({
 					title: title,
 					description: description,
 					responsible: responsible,
 					status: status,
+					fileUrl: fileData.fileUrl,
+					fileRef: fileData.fileRef,
 				});
 			}
 			if (props.edit) {
+				const fileData = await salveFilesStorage(file);
+
 				updateDocumentTask(id, {
 					title: title,
 					description: description,
 					responsible: responsible,
 					status: status,
+					fileUrl: fileData.fileUrl,
+					fileRef: fileData.fileRef,
 				});
 
 				setTimeout(() => {
@@ -99,6 +109,9 @@ export const AppForm = (props) => {
 	};
 	const handleStatus = (event) => {
 		setStatus(event.target.value);
+	};
+	const handleFile = (event) => {
+		setFile(event.target.files[0]);
 	};
 
 	return (
@@ -184,6 +197,14 @@ export const AppForm = (props) => {
 							<MenuItem value='finished'>Finalizada</MenuItem>
 						</Select>
 					</FormControl>
+					<TextField
+						onChange={handleFile}
+						type='file'
+						accept='image/*,.pdf'
+						style={{
+							width: '100%',
+						}}
+					/>
 
 					<Button
 						variant='contained'
