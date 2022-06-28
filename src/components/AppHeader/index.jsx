@@ -22,7 +22,7 @@ export const AppHeader = (props) => {
 
 	const navigate = useNavigate('');
 	const handleLogout = () => {
-		localStorage.removeItem('userUid');
+		localStorage.removeItem('nameUser');
 		localStorage.removeItem('token');
 		authLogoutUser();
 		navigate('/login');

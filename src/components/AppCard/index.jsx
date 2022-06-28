@@ -52,7 +52,7 @@ export const AppCard = (props) => {
 						{props.titleTask}
 					</Typography>
 					<Typography sx={{ mb: 1.5 }} color='text.secondary'>
-						{props.AuthorName}
+						{props.ResponsibleName}
 					</Typography>
 					<Typography variant='body2'>{props.description}</Typography>
 				</CardContent>

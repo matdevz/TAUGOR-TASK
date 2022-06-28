@@ -34,9 +34,14 @@ export const Register = () => {
 		const user = await authCreateUser(email, password);
 
 		if (user) {
-			salveDatasUsers(user.uid, { name: name, email: email });
+			salveDatasUsers(user.uid, {
+				name: name,
+				email: email,
+				id: user.uid,
+			});
+
 			localStorage.setItem('token', user.accessToken);
-			localStorage.setItem('userUid', user.uid);
+			localStorage.setItem('nameUser', name);
 			navigate('/alltask');
 			setLoanding(false);
 		}

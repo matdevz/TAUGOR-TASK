@@ -18,7 +18,7 @@ export const AppForm = (props) => {
 	const [names, setNames] = useState([]);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
-	const [author, setAuthor] = useState('');
+	const [responsible, setResponsible] = useState('');
 	const [status, setStatus] = useState('');
 
 	const { id } = useParams();
@@ -40,7 +40,7 @@ export const AppForm = (props) => {
 
 				setTitle(dataTask.title);
 				setDescription(dataTask.description);
-				setAuthor(dataTask.author);
+				setResponsible(dataTask.responsible);
 				setStatus(dataTask.status);
 			};
 
@@ -49,12 +49,12 @@ export const AppForm = (props) => {
 	}, [id, props.edit]);
 
 	const handleSubmit = () => {
-		if (title && description && author && status) {
+		if (title && description && responsible && status) {
 			if (props.salve) {
 				salveDocumentTask({
 					title: title,
 					description: description,
-					author: author,
+					responsible: responsible,
 					status: status,
 				});
 			}
@@ -62,7 +62,7 @@ export const AppForm = (props) => {
 				updateDocumentTask(id, {
 					title: title,
 					description: description,
-					author: author,
+					responsible: responsible,
 					status: status,
 				});
 
@@ -84,7 +84,7 @@ export const AppForm = (props) => {
 	const resetStates = () => {
 		setTitle('');
 		setDescription('');
-		setAuthor('');
+		setResponsible('');
 		setStatus('');
 	};
 
@@ -95,7 +95,7 @@ export const AppForm = (props) => {
 		setDescription(event.target.value);
 	};
 	const handleAutor = (event) => {
-		setAuthor(event.target.value);
+		setResponsible(event.target.value);
 	};
 	const handleStatus = (event) => {
 		setStatus(event.target.value);
@@ -150,13 +150,13 @@ export const AppForm = (props) => {
 					/>
 					<FormControl fullWidth>
 						<InputLabel id='demo-simple-select-label'>
-							Autor
+							Responsável
 						</InputLabel>
 						<Select
 							labelId='demo-simple-select-label'
 							id='demo-simple-select'
-							value={author}
-							label='Autor'
+							value={responsible}
+							label='Responsável'
 							onChange={handleAutor}
 						>
 							{names.map((name) => {

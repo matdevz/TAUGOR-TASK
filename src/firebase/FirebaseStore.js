@@ -7,21 +7,36 @@ import {
 	getDoc,
 	deleteDoc,
 	setDoc,
+	query,
 	doc,
+	where,
 } from 'firebase/firestore';
 
 export const db = getFirestore(config);
 
-const uid = localStorage.getItem('userUid');
+const nameUser = localStorage.getItem('nameUser');
 const userCollectionRef = collection(db, 'users');
-const taskCollectionRef = collection(db, `task${uid}`);
+const taskCollectionRef = collection(db, 'tasks');
 
 export const salveDatasUsers = async (userId, data) => {
 	try {
-		await setDoc(doc(userCollectionRef, userId), {
-			name: data.name,
-			email: data.email,
+		await setDoc(doc(userCollectionRef, userId), data);
+	} catch (error) {
+		console.log(error);
+	}
+};
+export const getUserName = async (userId) => {
+	try {
+		const queryDocs = query(userCollectionRef, where('id', '==', userId));
+
+		const querySnapshot = await getDocs(queryDocs);
+
+		const docName = {};
+		querySnapshot.forEach((doc) => {
+			docName.name = doc.data().name;
 		});
+
+		return docName;
 	} catch (error) {
 		console.log(error);
 	}
@@ -51,7 +66,12 @@ export const salveDocumentTask = async (data) => {
 
 export const readDocumentsTasks = async () => {
 	try {
-		const querySnapshot = await getDocs(taskCollectionRef);
+		const queryDocs = query(
+			taskCollectionRef,
+			where('responsible', '==', nameUser)
+		);
+
+		const querySnapshot = await getDocs(queryDocs);
 
 		const documents = [];
 		querySnapshot.forEach((doc) => {

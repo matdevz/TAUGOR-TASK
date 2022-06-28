@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authLoginUser } from '../../firebase/FirebaseAuth';
+import { getUserName } from '../../firebase/FirebaseStore';
 
 import {
 	Container,
@@ -33,8 +34,11 @@ export const Login = () => {
 		const user = await authLoginUser(email, password);
 
 		if (user) {
+			const docName = await getUserName(user.uid);
+
 			localStorage.setItem('token', user.accessToken);
-			localStorage.setItem('userUid', user.uid);
+			localStorage.setItem('nameUser', docName.name);
+
 			navigate('/alltask');
 			setLoanding(false);
 		}
