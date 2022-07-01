@@ -38,13 +38,13 @@ export const AppCard = (props) => {
 					<Typography
 						sx={{ fontSize: 14 }}
 						color={() => {
-							if (props.status === 'pending') {
+							if (props.status === 'pendente') {
 								return 'warning.dark';
 							}
-							if (props.status === 'progress') {
+							if (props.status === 'andamento') {
 								return 'info.dark';
 							}
-							if (props.status === 'finished') {
+							if (props.status === 'finalizada') {
 								return 'success.dark';
 							}
 						}}
@@ -55,9 +55,7 @@ export const AppCard = (props) => {
 					<Typography variant='h5' component='div'>
 						{props.titleTask}
 					</Typography>
-					<Typography sx={{ mb: 1.5 }} color='text.secondary'>
-						{props.ResponsibleName}
-					</Typography>
+				
 					<Typography variant='body2'>{props.description}</Typography>
 				</CardContent>
 				<CardActions>

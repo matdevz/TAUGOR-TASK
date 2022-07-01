@@ -3,6 +3,7 @@ import {
 	getAuth,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
+	sendPasswordResetEmail,
 } from 'firebase/auth';
 
 export const auth = getAuth(config);
@@ -34,5 +35,16 @@ export const authLogoutUser = async () => {
 		await auth.signOut();
 	} catch (error) {
 		alert('Ouve uma falha:( Tente novamente!');
+	}
+};
+
+export const authResetPassword = async (email) => {
+	try {
+		await sendPasswordResetEmail(auth, email);
+		return;
+	} catch (error) {
+		if (error.code === 'auth/user-not-found') {
+			alert('Este email não consta no sistema!');
+		}
 	}
 };

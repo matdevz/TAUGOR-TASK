@@ -41,7 +41,6 @@ export const AppMain = (props) => {
 								status={doc.data.status}
 								statusName={doc.data.status}
 								titleTask={doc.data.title}
-								ResponsibleName={doc.data.responsible}
 								description={doc.data.description}
 							/>
 						);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AppModal } from '../../components/AppModal';
 import { authLoginUser } from '../../firebase/FirebaseAuth';
-import { getUserName } from '../../firebase/FirebaseStore';
 
 import {
 	Container,
@@ -20,6 +20,8 @@ export const Login = () => {
 	const [loading, setLoanding] = useState(false);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [showModal, setShowModal] = useState(false);
+
 	const navigate = useNavigate('');
 
 	useEffect(() => {
@@ -34,10 +36,8 @@ export const Login = () => {
 		const user = await authLoginUser(email, password);
 
 		if (user) {
-			const docName = await getUserName(user.uid);
-
 			localStorage.setItem('token', user.accessToken);
-			localStorage.setItem('nameUser', docName.name);
+			localStorage.setItem('userUid', user.uid);
 
 			navigate('/alltask');
 			setLoanding(false);
@@ -52,6 +52,8 @@ export const Login = () => {
 
 	return (
 		<Container>
+			{showModal && <AppModal setShowModal={setShowModal} />}
+
 			<Content>
 				<Header>
 					<Logo>
@@ -87,6 +89,11 @@ export const Login = () => {
 					<Text>
 						Não possui uma conta?
 						<Link to='/register'>Criar</Link>
+						<br />
+						Esqueceu a senha?
+						<Link to='/login' onClick={() => setShowModal(true)}>
+							Redefinir senha
+						</Link>
 					</Text>
 				</Footer>
 			</Content>

@@ -41,7 +41,7 @@ export const Register = () => {
 			});
 
 			localStorage.setItem('token', user.accessToken);
-			localStorage.setItem('nameUser', name);
+			localStorage.setItem('userUid', user.uid);
 			navigate('/alltask');
 			setLoanding(false);
 		}
@@ -71,12 +71,16 @@ export const Register = () => {
 							onChange={(event) => {
 								setName(event.target.value);
 							}}
+							minLength='3'
+							maxLength='30'
 							value={name}
 						/>
 						<Input
 							type='email'
 							placeholder='Email'
 							required
+							minLength='8'
+							maxLength='30'
 							onChange={(event) => {
 								setEmail(event.target.value);
 							}}

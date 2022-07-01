@@ -7,16 +7,16 @@ import {
 	getDoc,
 	deleteDoc,
 	setDoc,
-	query,
+	// query,
 	doc,
-	where,
+	// where,
 } from 'firebase/firestore';
 
 export const db = getFirestore(config);
 
-const nameUser = localStorage.getItem('nameUser');
+const userUid = localStorage.getItem('userUid');
 const userCollectionRef = collection(db, 'users');
-const taskCollectionRef = collection(db, 'tasks');
+const taskCollectionRef = collection(db, `tasks${userUid}`);
 
 export const salveDatasUsers = async (userId, data) => {
 	try {
@@ -25,40 +25,45 @@ export const salveDatasUsers = async (userId, data) => {
 		console.log(error);
 	}
 };
-export const getUserName = async (userId) => {
-	try {
-		const queryDocs = query(userCollectionRef, where('id', '==', userId));
+// export const getUserName = async (userId) => {
+// 	try {
+// 		const queryDocs = query(userCollectionRef, where('id', '==', userId));
 
-		const querySnapshot = await getDocs(queryDocs);
+// 		const querySnapshot = await getDocs(queryDocs);
 
-		const docName = {};
-		querySnapshot.forEach((doc) => {
-			docName.name = doc.data().name;
-		});
+// 		const docName = {};
+// 		querySnapshot.forEach((doc) => {
+// 			docName.name = doc.data().name;
+// 		});
 
-		return docName;
-	} catch (error) {
-		console.log(error);
-	}
-};
+// 		return docName;
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// };
 
-export const getDataUsers = async () => {
-	try {
-		const dataUsers = [];
-		const querySnapshot = await getDocs(userCollectionRef);
-		querySnapshot.forEach((doc) => {
-			dataUsers.push({ id: doc.id, name: doc.data().name });
-		});
+// export const getDataUsers = async () => {
+// 	try {
+// 		const dataUsers = [];
+// 		const querySnapshot = await getDocs(userCollectionRef);
+// 		querySnapshot.forEach((doc) => {
+// 			dataUsers.push({
+// 				id: doc.id,
+// 				name: doc.data().name,
+// 				username: doc.data().username,
+// 			});
+// 		});
 
-		return dataUsers;
-	} catch (error) {
-		console.log(error);
-	}
-};
+// 		return dataUsers;
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// };
 
 export const salveDocumentTask = async (data) => {
 	try {
 		await addDoc(taskCollectionRef, data);
+		console.log(userUid);
 	} catch (erro) {
 		console.log(erro);
 	}
@@ -66,12 +71,7 @@ export const salveDocumentTask = async (data) => {
 
 export const readDocumentsTasks = async () => {
 	try {
-		const queryDocs = query(
-			taskCollectionRef,
-			where('responsible', '==', nameUser)
-		);
-
-		const querySnapshot = await getDocs(queryDocs);
+		const querySnapshot = await getDocs(taskCollectionRef);
 
 		const documents = [];
 		querySnapshot.forEach((doc) => {

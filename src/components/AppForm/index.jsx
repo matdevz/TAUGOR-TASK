@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { AppDrive } from '../AppDrive/index';
 import { useNavigate, useParams } from 'react-router-dom';
 import { salveFilesStorage } from '../../firebase/FirebaseStorage';
 import {
-	getDataUsers,
 	salveDocumentTask,
 	updateDocumentTask,
 	getAllDataOneDoc,
@@ -16,24 +16,13 @@ import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 
 export const AppForm = (props) => {
-	const [names, setNames] = useState([]);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
-	const [responsible, setResponsible] = useState('');
 	const [status, setStatus] = useState('');
 	const [file, setFile] = useState(null);
 
 	const { id } = useParams();
 	const navigate = useNavigate('');
-
-	useEffect(() => {
-		const getNamesUsers = async () => {
-			const dataUsers = await getDataUsers();
-			setNames(dataUsers);
-		};
-
-		getNamesUsers();
-	}, []);
 
 	useEffect(() => {
 		if (props.edit) {
@@ -42,7 +31,6 @@ export const AppForm = (props) => {
 
 				setTitle(dataTask.title);
 				setDescription(dataTask.description);
-				setResponsible(dataTask.responsible);
 				setStatus(dataTask.status);
 			};
 
@@ -51,14 +39,13 @@ export const AppForm = (props) => {
 	}, [id, props.edit]);
 
 	const handleSubmit = async () => {
-		if (title && description && responsible && status && file) {
+		if (title && description && status && file) {
 			if (props.salve) {
 				const fileData = await salveFilesStorage(file);
 
 				salveDocumentTask({
 					title: title,
 					description: description,
-					responsible: responsible,
 					status: status,
 					fileUrl: fileData.fileUrl,
 					fileRef: fileData.fileRef,
@@ -70,7 +57,6 @@ export const AppForm = (props) => {
 				updateDocumentTask(id, {
 					title: title,
 					description: description,
-					responsible: responsible,
 					status: status,
 					fileUrl: fileData.fileUrl,
 					fileRef: fileData.fileRef,
@@ -94,24 +80,7 @@ export const AppForm = (props) => {
 	const resetStates = () => {
 		setTitle('');
 		setDescription('');
-		setResponsible('');
 		setStatus('');
-	};
-
-	const handleTitle = (event) => {
-		setTitle(event.target.value);
-	};
-	const handleDescription = (event) => {
-		setDescription(event.target.value);
-	};
-	const handleAutor = (event) => {
-		setResponsible(event.target.value);
-	};
-	const handleStatus = (event) => {
-		setStatus(event.target.value);
-	};
-	const handleFile = (event) => {
-		setFile(event.target.files[0]);
 	};
 
 	return (
@@ -139,7 +108,9 @@ export const AppForm = (props) => {
 					}}
 				>
 					<TextField
-						onChange={handleTitle}
+						onChange={(event) => {
+							setTitle(event.target.value);
+						}}
 						value={title}
 						id='outlined-multiline-flexible'
 						label='Título da tarefa'
@@ -151,7 +122,9 @@ export const AppForm = (props) => {
 					/>
 
 					<TextField
-						onChange={handleDescription}
+						onChange={(event) => {
+							setDescription(event.target.value);
+						}}
 						value={description}
 						id='outlined-multiline-static'
 						label='Descrição da tarefa'
@@ -161,26 +134,7 @@ export const AppForm = (props) => {
 							width: '100%',
 						}}
 					/>
-					<FormControl fullWidth>
-						<InputLabel id='demo-simple-select-label'>
-							Responsável
-						</InputLabel>
-						<Select
-							labelId='demo-simple-select-label'
-							id='demo-simple-select'
-							value={responsible}
-							label='Responsável'
-							onChange={handleAutor}
-						>
-							{names.map((name) => {
-								return (
-									<MenuItem key={name.id} value={name.name}>
-										{name.name}
-									</MenuItem>
-								);
-							})}
-						</Select>
-					</FormControl>
+
 					<FormControl fullWidth>
 						<InputLabel id='demo-simple-select-label'>
 							Status
@@ -190,15 +144,19 @@ export const AppForm = (props) => {
 							id='demo-simple-select'
 							value={status}
 							label='Status'
-							onChange={handleStatus}
+							onChange={(event) => {
+								setStatus(event.target.value);
+							}}
 						>
-							<MenuItem value='pending'>Pendente</MenuItem>
-							<MenuItem value='progress'>Andamento</MenuItem>
-							<MenuItem value='finished'>Finalizada</MenuItem>
+							<MenuItem value='pendente'>Pendente</MenuItem>
+							<MenuItem value='andamento'>Andamento</MenuItem>
+							<MenuItem value='finalizada'>Finalizada</MenuItem>
 						</Select>
 					</FormControl>
 					<TextField
-						onChange={handleFile}
+						onChange={(event) => {
+							setFile(event.target.files[0]);
+						}}
 						type='file'
 						accept='image/*,.pdf'
 						style={{
@@ -216,6 +174,8 @@ export const AppForm = (props) => {
 						SALVAR
 					</Button>
 				</form>
+
+				<AppDrive />
 			</section>
 		</>
 	);
