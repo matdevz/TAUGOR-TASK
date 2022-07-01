@@ -10,6 +10,8 @@ import {
 const storage = getStorage(config);
 
 export const salveFilesStorage = async (file) => {
+	if (!file) return null;
+
 	const fileRef = ref(storage, `files/${file.name}`);
 
 	try {

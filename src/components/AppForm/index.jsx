@@ -20,6 +20,7 @@ export const AppForm = (props) => {
 	const [description, setDescription] = useState('');
 	const [status, setStatus] = useState('');
 	const [file, setFile] = useState(null);
+	const [fileDrive, setFileDrive] = useState('');
 
 	const { id } = useParams();
 	const navigate = useNavigate('');
@@ -39,7 +40,8 @@ export const AppForm = (props) => {
 	}, [id, props.edit]);
 
 	const handleSubmit = async () => {
-		if (title && description && status && file) {
+		if (title && description && status && (file || fileDrive)) {
+			console.log(fileDrive);
 			if (props.salve) {
 				const fileData = await salveFilesStorage(file);
 
@@ -47,8 +49,8 @@ export const AppForm = (props) => {
 					title: title,
 					description: description,
 					status: status,
-					fileUrl: fileData.fileUrl,
-					fileRef: fileData.fileRef,
+					fileUrl: fileData ? fileData.fileUrl : fileDrive,
+					fileRef: fileData ? fileData.fileRef : null,
 				});
 			}
 			if (props.edit) {
@@ -58,7 +60,7 @@ export const AppForm = (props) => {
 					title: title,
 					description: description,
 					status: status,
-					fileUrl: fileData.fileUrl,
+					fileUrl: fileData.fileUrl || fileDrive,
 					fileRef: fileData.fileRef,
 				});
 
@@ -153,16 +155,32 @@ export const AppForm = (props) => {
 							<MenuItem value='finalizada'>Finalizada</MenuItem>
 						</Select>
 					</FormControl>
-					<TextField
-						onChange={(event) => {
-							setFile(event.target.files[0]);
-						}}
-						type='file'
-						accept='image/*,.pdf'
+					<div
 						style={{
+							displa: 'flex',
+							flexDirection: 'row',
 							width: '100%',
 						}}
-					/>
+					>
+						<Button
+							variant='outlined'
+							component='label'
+							type='file'
+							accept='image/*,.pdf'
+							style={{
+								width: '50%',
+							}}
+							onChange={(event) => {
+								setFile(event.target.files[0]);
+								alert('Arquivo selecionado dos Arquivos!');
+							}}
+						>
+							Upload local
+							<input type='file' hidden />
+						</Button>
+
+						<AppDrive setFileDrive={setFileDrive} />
+					</div>
 
 					<Button
 						variant='contained'
@@ -174,8 +192,6 @@ export const AppForm = (props) => {
 						SALVAR
 					</Button>
 				</form>
-
-				<AppDrive />
 			</section>
 		</>
 	);
