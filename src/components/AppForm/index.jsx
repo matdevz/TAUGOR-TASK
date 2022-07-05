@@ -19,6 +19,10 @@ export const AppForm = (props) => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [status, setStatus] = useState('');
+	const [impactedUsers, setImpactedUsers] = useState('');
+	const [operationStatus, setOperationStatus] = useState('');
+	const [infoEnvironment, setInfoEnvironment] = useState('');
+
 	const [file, setFile] = useState(null);
 	const [fileDrive, setFileDrive] = useState('');
 
@@ -33,6 +37,9 @@ export const AppForm = (props) => {
 				setTitle(dataTask.title);
 				setDescription(dataTask.description);
 				setStatus(dataTask.status);
+				setImpactedUsers(dataTask.impactedUsers);
+				setOperationStatus(dataTask.operationStatus);
+				setInfoEnvironment(dataTask.infoEnvironment);
 			};
 
 			getDatasTask();
@@ -40,7 +47,15 @@ export const AppForm = (props) => {
 	}, [id, props.edit]);
 
 	const handleSubmit = async () => {
-		if (title && description && status && (file || fileDrive)) {
+		if (
+			title &&
+			description &&
+			status &&
+			impactedUsers &&
+			operationStatus &&
+			infoEnvironment &&
+			(file || fileDrive)
+		) {
 			console.log(fileDrive);
 			if (props.salve) {
 				const fileData = await salveFilesStorage(file);
@@ -49,6 +64,9 @@ export const AppForm = (props) => {
 					title: title,
 					description: description,
 					status: status,
+					impactedUsers: impactedUsers,
+					operationStatus: operationStatus,
+					infoEnvironment: infoEnvironment,
 					fileUrl: fileData ? fileData.fileUrl : fileDrive,
 					fileRef: fileData ? fileData.fileRef : null,
 				});
@@ -60,6 +78,9 @@ export const AppForm = (props) => {
 					title: title,
 					description: description,
 					status: status,
+					impactedUsers: impactedUsers,
+					operationStatus: operationStatus,
+					infoEnvironment: infoEnvironment,
 					fileUrl: fileData.fileUrl || fileDrive,
 					fileRef: fileData.fileRef,
 				});
@@ -83,6 +104,9 @@ export const AppForm = (props) => {
 		setTitle('');
 		setDescription('');
 		setStatus('');
+		setImpactedUsers('');
+		setOperationStatus('');
+		setInfoEnvironment('');
 	};
 
 	return (
@@ -153,6 +177,76 @@ export const AppForm = (props) => {
 							<MenuItem value='pendente'>Pendente</MenuItem>
 							<MenuItem value='andamento'>Andamento</MenuItem>
 							<MenuItem value='finalizada'>Finalizada</MenuItem>
+						</Select>
+					</FormControl>
+					<FormControl fullWidth>
+						<InputLabel id='demo-simple-select-label'>
+							Usuários Impactados
+						</InputLabel>
+						<Select
+							labelId='demo-simple-select-label'
+							id='demo-simple-select'
+							value={impactedUsers}
+							label='Usuários Impactados'
+							onChange={(event) => {
+								setImpactedUsers(event.target.value);
+							}}
+						>
+							<MenuItem value='Apenas 1'>Apenas 1</MenuItem>
+							<MenuItem value='1 a 10 Usuários'>
+								1 a 10 Usuários
+							</MenuItem>
+							<MenuItem value='11 a 30 Usuários'>
+								11 a 30 Usuários
+							</MenuItem>
+							<MenuItem value='31 a 50 Usuários'>
+								31 a 50 Usuários
+							</MenuItem>
+							<MenuItem value='Mais de 50 Usuários'>
+								Mais de 50 Usuários
+							</MenuItem>
+						</Select>
+					</FormControl>
+					<FormControl fullWidth>
+						<InputLabel id='demo-simple-select-label'>
+							Sua operação está parada?
+						</InputLabel>
+						<Select
+							labelId='demo-simple-select-label'
+							id='demo-simple-select'
+							value={operationStatus}
+							label='Sua operação está parada?'
+							onChange={(event) => {
+								setOperationStatus(event.target.value);
+							}}
+						>
+							<MenuItem value='Operação parada'>
+								Operação parada
+							</MenuItem>
+							<MenuItem value='Operação consegue trabalhar'>
+								Operação consegue trabalhar
+							</MenuItem>
+						</Select>
+					</FormControl>
+					<FormControl fullWidth>
+						<InputLabel id='demo-simple-select-label'>
+							Informações do Ambiente
+						</InputLabel>
+						<Select
+							labelId='demo-simple-select-label'
+							id='demo-simple-select'
+							value={infoEnvironment}
+							label='Informações do Ambiente'
+							onChange={(event) => {
+								setInfoEnvironment(event.target.value);
+							}}
+						>
+							<MenuItem value='Dados/Ambiente de Testes - Cliente Ativo/Licença'>
+								Dados/Ambiente de Testes - Cliente Ativo/Licença
+							</MenuItem>
+							<MenuItem value='Ambiente de produção - Cliente Ativo/Licença'>
+								Ambiente de produção - Cliente Ativo/Licença
+							</MenuItem>
 						</Select>
 					</FormControl>
 					<div

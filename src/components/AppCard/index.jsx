@@ -55,8 +55,35 @@ export const AppCard = (props) => {
 					<Typography variant='h5' component='div'>
 						{props.titleTask}
 					</Typography>
-				
-					<Typography variant='body2'>{props.description}</Typography>
+
+					<Typography variant='body2'>
+						<strong>Usuários Impactados: </strong>
+						<br />
+						{props.impactedUsers}
+						<br />
+						<br />
+					</Typography>
+					<Typography variant='body2'>
+						<strong>Status da Operação: </strong>
+						<br />
+						{props.operationStatus}
+						<br />
+						<br />
+					</Typography>
+					<Typography variant='body2'>
+						<strong>Informações do Ambiente: </strong>
+						<br />
+						{props.infoEnvironment}
+						<br />
+						<br />
+					</Typography>
+					<Typography variant='body2'>
+						<strong>Descrição: </strong>
+						<br />
+						{props.description}
+						<br />
+						<br />
+					</Typography>
 				</CardContent>
 				<CardActions>
 					<Button size='small' onClick={handleEdit}>

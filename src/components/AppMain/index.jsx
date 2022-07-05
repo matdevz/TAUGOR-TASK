@@ -42,6 +42,9 @@ export const AppMain = (props) => {
 								statusName={doc.data.status}
 								titleTask={doc.data.title}
 								description={doc.data.description}
+								impactedUsers={doc.data.impactedUsers}
+								operationStatus={doc.data.operationStatus}
+								infoEnvironment={doc.data.infoEnvironment}
 							/>
 						);
 					})}
